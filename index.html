@@ -9,13 +9,14 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="MINI TRAMPOS — planilha de testes">
 <meta property="og:description" content="7 dias, cronômetro ligado, print do saque. Sem print, não entra na planilha.">
-<meta property="og:image" content="preview.png">
+<meta property="og:image" content="https://minitrampos.github.io/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MINI TRAMPOS — planilha de testes">
 <meta name="twitter:description" content="7 dias, cronômetro ligado, print do saque. Sem print, não entra na planilha.">
-<meta name="twitter:image" content="preview.png">
+<meta name="twitter:image" content="https://minitrampos.github.io/preview.png">
+<link rel="canonical" href="https://minitrampos.github.io/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='30' cy='34' r='24' fill='%23D4AF37'/><path d='M46 12 L62 6 L62 30 Z' fill='%230E1512'/></svg>">
 <style>
 :root{
@@ -257,11 +258,12 @@ footer p{margin:0 0 6px}
 </section>
 
 <section aria-labelledby="h-rep">
-  <h2 id="h-rep">Reprovados</h2>
-  <p class="sub">apps que passaram pelo protocolo e não valem o tempo</p>
+  <h2 id="h-rep">Os que não pagaram</h2>
+  <p class="sub">apps testados que não pagaram no prazo do teste — com data e evidência</p>
   <div class="reprovados">
     <ul id="listaRep"></ul>
     <p class="regra">sem print de saque, não entra na planilha</p>
+    <p style="margin:10px 0 0;color:var(--gray-t);font-size:.8rem">"não pagou" = não pagou nos 7 dias de teste, na data registrada. Se o app mudar, a gente testa de novo e atualiza.</p>
   </div>
 </section>
 
@@ -282,7 +284,7 @@ footer p{margin:0 0 6px}
 
 /* ========== DADOS ========== */
 const apps = [
- {"app":"PiniOn","categoria":"pesquisa/tarefa","teste":"18–24/10/2026","horas":2.2,"ganho":0,"minimo_saque":"R$30","pagamento":"Pix","pagou":"não","veredito":"não vale","nota":1,"obs":"0 missões em 7 dias; saldo R$0,00"},
+ {"app":"PiniOn","categoria":"pesquisa/tarefa","teste":"18–24/10/2026","horas":2.2,"ganho":0,"minimo_saque":"R$30","pagamento":"Pix","pagou":"não","veredito":"não pagou","nota":1,"obs":"0 missões em 7 dias; saldo R$0,00"},
  {"app":"OpinaTAP","categoria":"pesquisa","teste":"—","horas":0,"ganho":0,"minimo_saque":"R$15","pagamento":"Pix","pagou":"pendente","veredito":"pendente","nota":null,"obs":"nacional, Pix desde o início"},
  {"app":"Attapoll","categoria":"pesquisa","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$3","pagamento":"PayPal","pagou":"pendente","veredito":"pendente","nota":null,"obs":"volume bom no BR, sem Pix"},
  {"app":"Honeygain","categoria":"passivo","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$20","pagamento":"PayPal/crypto","pagou":"pendente","veredito":"pendente","nota":null,"obs":"renda passiva de banda, lento"},
@@ -340,12 +342,12 @@ const testado = a => a.teste !== '—';
 const rhora = a => (a.horas > 0 ? a.ganho / a.horas : null);
 function corApp(a){
   if (a.pagou === 'sim') return COR.verde;
-  if (a.veredito === 'não vale' || a.pagou === 'não') return COR.verm;
+  if (a.veredito === 'não pagou' || a.pagou === 'não') return COR.verm;
   return COR.cinza;
 }
 function classeVeredito(v){
   if (v === 'vale') return 'b-verde';
-  if (v === 'não vale') return 'b-verm';
+  if (v === 'não pagou' || v === 'golpe') return 'b-verm';
   return 'b-cinza';
 }
 // data final do teste ("18–24/10/2026" -> 24/10/2026) em dias UTC
@@ -367,7 +369,7 @@ function corSemana(s){
     return d >= 0 && d <= 6;
   });
   if (doPeriodo.some(a => a.pagou === 'sim')) return COR.verde;
-  if (doPeriodo.some(a => a.veredito === 'não vale' || a.pagou === 'não')) return COR.verm;
+  if (doPeriodo.some(a => a.veredito === 'não pagou' || a.pagou === 'não')) return COR.verm;
   return COR.cinza;
 }
 
@@ -381,12 +383,12 @@ $('rodapeData').textContent = txtAtual;
 (function numeros(){
   const nTestados = apps.filter(testado).length;
   const nPagaram = apps.filter(a => a.pagou === 'sim').length;
-  const nReprov = apps.filter(a => a.veredito === 'não vale').length;
+  const nReprov = apps.filter(a => a.veredito === 'não pagou' || a.veredito === 'golpe').length;
   const med = mediana(apps.filter(a => a.horas > 0).map(rhora));
   const itens = [
     {v: String(nTestados), l: 'apps testados', s: 'de ' + apps.length + ' na lista', c: ''},
     {v: String(nPagaram), l: 'pagaram', s: 'com print de saque', c: 'c-verde'},
-    {v: String(nReprov), l: 'reprovaram', s: 'veredito "não vale"', c: 'c-verm'},
+    {v: String(nReprov), l: 'não pagaram', s: 'sem print de saque', c: 'c-verm'},
     {v: med == null ? '—' : brl(med), l: 'R$/hora mediano', s: 'só apps com horas', c: 'c-ouro'}
   ];
   const ul = $('numeros');
@@ -589,7 +591,7 @@ const avisoVazio = {
   todos: 'nenhum app na lista.',
   testados: 'nenhum app testado ainda — o primeiro resultado sai no sábado.',
   pagou: 'nenhum app pagou ainda.',
-  nao: 'nenhum app reprovado por falta de pagamento ainda.',
+  nao: 'nenhum app sem pagamento ainda.',
   pendente: 'nenhum app pendente.'
 };
 
@@ -685,7 +687,7 @@ renderTabela();
 /* ========== REPROVADOS ========== */
 (function reprovados(){
   const ul = $('listaRep');
-  const lista = apps.filter(a => a.veredito === 'não vale');
+  const lista = apps.filter(a => a.veredito === 'não pagou' || a.veredito === 'golpe');
   if (!lista.length){
     const li = document.createElement('li');
     li.textContent = 'nenhum reprovado ainda.';
@@ -696,7 +698,7 @@ renderTabela();
   lista.forEach(a => {
     const li = document.createElement('li');
     const nome = document.createElement('span'); nome.className = 'rep-nome'; nome.textContent = a.app;
-    const car = document.createElement('span'); car.className = 'carimbo'; car.textContent = 'não vale';
+    const car = document.createElement('span'); car.className = 'carimbo'; car.textContent = a.veredito === 'golpe' ? 'golpe' : 'não pagou';
     li.append(nome, car);
     if (a.obs){ const p = document.createElement('p'); p.className = 'rep-obs'; p.textContent = a.obs; li.appendChild(p); }
     ul.appendChild(li);
