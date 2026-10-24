@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E1512">
+<title>MINI TRAMPOS — planilha</title>
+<meta name="description" content="MINI TRAMPOS: testo apps que prometem pagar via PIX e publico o resultado honesto.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MINI TRAMPOS — planilha de testes">
+<meta property="og:description" content="7 dias, cronômetro ligado, print do saque. Sem print, não entra na planilha.">
+<meta property="og:image" content="preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MINI TRAMPOS — planilha de testes">
+<meta name="twitter:description" content="7 dias, cronômetro ligado, print do saque. Sem print, não entra na planilha.">
+<meta name="twitter:image" content="preview.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='30' cy='34' r='24' fill='%23D4AF37'/><path d='M46 12 L62 6 L62 30 Z' fill='%230E1512'/></svg>">
+<style>
+:root{
+  --bg:#0E1512; --card:#16211B; --tx:#F2EFE6;
+  --gold:#D4AF37; --green:#2E7D5B; --red:#C0453B; --gray:#6B7770;
+  --green-t:#6FCF9E; --red-t:#EE8D83; --gray-t:#A9B4AD; --line:#26352C;
+  --fonte:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--fonte);font-size:16px;line-height:1.45;min-width:320px}
+.pagina{max-width:960px;margin:0 auto;padding:20px 16px 40px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-weight:800;text-transform:uppercase;letter-spacing:-.03em;margin:0}
+
+/* cabeçalho */
+.topo{padding:12px 0 8px;border-bottom:3px double var(--gray);margin-bottom:20px}
+.wordmark{font-size:clamp(2.6rem,13vw,5rem);line-height:.95;color:var(--gold);letter-spacing:-.045em}
+.bordao{display:inline-block;margin:14px 0 0;padding:6px 12px;border:2px solid var(--tx);border-radius:4px;transform:rotate(-1.5deg);font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
+.atualizado{margin:12px 0 0;color:var(--gray-t);font-size:.9rem;text-transform:uppercase;letter-spacing:.08em}
+
+/* seções */
+section{margin:34px 0}
+h2{font-size:1.3rem;color:var(--gold)}
+h2::before{content:"";display:inline-block;width:10px;height:1em;background:var(--gold);margin-right:10px;vertical-align:-.12em}
+.sub{margin:4px 0 14px;color:var(--gray-t);font-size:.92rem}
+.cartao{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
+
+/* quatro números */
+.numeros{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;margin:0;padding:0}
+.numero{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 12px;min-width:0}
+.numero strong{display:block;font-size:clamp(2.2rem,10vw,3.4rem);line-height:1;font-weight:800;letter-spacing:-.04em}
+.numero span{display:block;margin-top:8px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.numero small{display:block;margin-top:2px;color:var(--gray-t);font-size:.8rem}
+.c-verde{color:var(--green-t)} .c-verm{color:var(--red-t)} .c-ouro{color:var(--gold)} .c-cinza{color:var(--gray-t)}
+
+/* cofrinho */
+.cofre-valor{font-size:clamp(48px,15vw,76px);font-weight:800;line-height:1;letter-spacing:-.05em;color:var(--gold);margin:4px 0 6px}
+.cofre-var{font-weight:800;font-size:1.05rem;margin:0}
+.cofre-meta{margin:4px 0 14px;color:var(--gray-t);font-size:.85rem}
+
+/* gráficos */
+.grafico svg{display:block;width:100%;height:auto}
+.grafico svg text{font-family:var(--fonte);fill:var(--tx)}
+.t-eixo{font-size:12px;fill:var(--gray-t)!important}
+.t-valor{font-size:13px;font-weight:800}
+.t-nome{font-size:13px;font-weight:700}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 16px;margin:12px 0 0;padding:0;list-style:none;font-size:.85rem;color:var(--gray-t)}
+.legenda li{display:flex;align-items:center;gap:6px}
+.legenda i{display:inline-block;width:14px;height:14px;border-radius:3px}
+.vazio{margin:12px 0 0;padding:10px 12px;border:2px dashed var(--gold);border-radius:6px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:.82rem;text-align:center}
+
+/* filtros */
+.filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border:2px solid var(--gray);border-radius:999px;background:transparent;color:var(--tx);font:inherit;font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:.85rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#0E1512}
+.busca{flex:1 1 180px;min-width:0;min-height:44px;padding:0 14px;background:var(--card);border:2px solid var(--gray);border-radius:6px;color:var(--tx);font:inherit;font-size:16px}
+.busca::placeholder{color:var(--gray-t)}
+.ordenar{display:flex;gap:8px;align-items:center;margin:0 0 12px}
+.ordenar select,.ordenar button{min-height:44px;background:var(--card);color:var(--tx);border:2px solid var(--gray);border-radius:6px;font:inherit;font-size:16px;padding:0 12px}
+.ordenar select{flex:1;min-width:0}
+.ordenar button{cursor:pointer;font-weight:800}
+.contagem{margin:0 0 10px;color:var(--gray-t);font-size:.85rem}
+
+/* tabela */
+.tabela{width:100%;border-collapse:collapse;font-size:.92rem}
+.tabela caption{text-align:left}
+.tabela th,.tabela td{padding:11px 8px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.tabela thead th{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-t);border-bottom:2px solid var(--gray);white-space:nowrap}
+.tabela thead th button{background:none;border:0;padding:4px 0;margin:0;color:var(--tx);font:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer}
+.tabela thead th button .seta{color:var(--gold);margin-left:4px}
+.tabela .num{text-align:right}
+.tabela tbody th{font-weight:800;font-size:1rem}
+.tabela tbody th small{display:block;font-weight:400;color:var(--gray-t);font-size:.78rem;margin-top:2px}
+.badge{display:inline-block;padding:3px 9px;border:2px solid;border-radius:4px;font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;transform:rotate(-1.5deg);white-space:nowrap}
+.b-verde{color:var(--green-t);border-color:var(--green)}
+.b-verm{color:var(--red-t);border-color:var(--red)}
+.b-cinza{color:var(--gray-t);border-color:var(--gray)}
+.sem-resultado{padding:18px 8px;color:var(--gray-t);font-weight:700}
+
+/* reprovados */
+.reprovados{background:var(--card);border:2px solid var(--red);border-radius:8px;padding:16px}
+.reprovados ul{list-style:none;margin:0;padding:0}
+.reprovados li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.reprovados li:last-child{border-bottom:0}
+.rep-nome{font-size:clamp(2rem,10vw,3.4rem);font-weight:800;text-transform:uppercase;letter-spacing:-.04em;line-height:1;color:var(--red-t)}
+.carimbo{display:inline-block;padding:4px 12px;border:3px double var(--red-t);color:var(--red-t);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;transform:rotate(-4deg)}
+.rep-obs{flex-basis:100%;margin:0;color:var(--gray-t);font-size:.85rem}
+.regra{margin:14px 0 0;padding:10px 12px;border:2px solid var(--gold);color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:.95rem}
+
+/* rodapé */
+footer{margin-top:40px;padding-top:16px;border-top:3px double var(--gray);color:var(--gray-t);font-size:.82rem}
+footer p{margin:0 0 6px}
+.assina{margin-top:18px;text-align:center;letter-spacing:.4em;font-weight:800;font-size:.72rem;color:var(--gray)}
+
+/* telas pequenas: tabela vira cards */
+@media (max-width:879px){
+  .tabela thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tabela,.tabela tbody,.tabela tr,.tabela td,.tabela th{display:block}
+  .tabela tr{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px}
+  .tabela tbody th{padding:0 0 8px;border-bottom:2px solid var(--gray);font-size:1.25rem}
+  .tabela td{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;text-align:right;border-bottom:1px dotted var(--line)}
+  .tabela td:last-child{border-bottom:0}
+  .tabela td::before{content:attr(data-label);color:var(--gray-t);font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;text-align:left;flex:none}
+  .tabela .num{text-align:right}
+}
+@media (min-width:880px){
+  .ordenar{display:none}
+  .numeros{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tabela-cartao{padding:8px 12px}
+  .graficos-par{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .graficos-par>section{margin:0}
+}
+@media (min-width:880px){ section.par-wrap{margin:34px 0} }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<header class="topo">
+  <h1 class="wordmark">MINI TRAMPOS</h1>
+  <p class="bordao">e o pix? nada ainda?</p>
+  <p class="atualizado" id="atualizado">atualizado em —</p>
+</header>
+
+<main>
+
+<section aria-labelledby="h-resumo">
+  <h2 class="sr-only" id="h-resumo">Resumo</h2>
+  <ul class="numeros" id="numeros"></ul>
+</section>
+
+<section aria-labelledby="h-metodo">
+  <h2 id="h-metodo">Como o teste é feito</h2>
+  <div class="cartao">
+    <p style="margin:0 0 8px">1. Instalo e uso o app por <strong>7 dias</strong>, com cronômetro ligado em cada tarefa.</p>
+    <p style="margin:0 0 8px">2. Tento sacar. Sem <strong>print do PIX</strong>, o app não entra como "pagou".</p>
+    <p style="margin:0 0 12px">3. Divido o ganho pelas horas: <strong>R$/hora</strong> é a única métrica que compara apps.</p>
+    <p style="margin:0"><a href="https://www.youtube.com/@minitrampos" style="color:var(--gold);font-weight:800;text-decoration:none">▶ ver os testes em vídeo no YouTube</a></p>
+  </div>
+</section>
+
+<section aria-labelledby="h-cofrinho">
+  <h2 id="h-cofrinho">Cofrinho</h2>
+  <p class="sub">quanto já caiu na conta, somando semana a semana</p>
+  <div class="cartao">
+    <p class="cofre-valor" id="cofreValor">—</p>
+    <p class="cofre-var" id="cofreVar">—</p>
+    <p class="cofre-meta" id="cofreMeta"></p>
+    <div class="grafico" id="grafCofrinho"></div>
+    <p class="vazio" id="vazioCofrinho" hidden>primeiro teste em andamento — os números entram todo sábado</p>
+  </div>
+</section>
+
+<div class="graficos-par">
+<section class="par-wrap" aria-labelledby="h-rhora">
+  <h2 id="h-rhora">R$/hora por app</h2>
+  <p class="sub">ganho dividido pelas horas de teste · app sem horas fica em cinza</p>
+  <div class="cartao">
+    <div class="grafico" id="grafApps"></div>
+    <ul class="legenda" aria-label="Legenda das cores">
+      <li><i style="background:#2E7D5B"></i>pagou</li>
+      <li><i style="background:#C0453B"></i>não vale</li>
+      <li><i style="background:#6B7770"></i>pendente</li>
+    </ul>
+    <p class="vazio" id="vazioApps" hidden>primeiro teste em andamento — os números entram todo sábado</p>
+  </div>
+</section>
+
+<section class="par-wrap" aria-labelledby="h-semana">
+  <h2 id="h-semana">Ganho por semana</h2>
+  <p class="sub">o que entrou em cada semana, sem acumular · renda é irregular</p>
+  <div class="cartao">
+    <div class="grafico" id="grafSemanas"></div>
+    <ul class="legenda" aria-label="Legenda das cores">
+      <li><i style="background:#2E7D5B"></i>pagou</li>
+      <li><i style="background:#C0453B"></i>não vale</li>
+      <li><i style="background:#6B7770"></i>pendente</li>
+    </ul>
+    <p class="vazio" id="vazioSemanas" hidden>primeiro teste em andamento — os números entram todo sábado</p>
+  </div>
+</section>
+</div>
+
+<section aria-labelledby="h-tabela">
+  <h2 id="h-tabela">A planilha</h2>
+  <p class="sub">todos os apps da fila, com o que foi testado e o que ainda não foi</p>
+
+  <div class="filtros">
+    <div class="chips" role="group" aria-label="Filtrar por pagamento" id="chips">
+      <button type="button" class="chip" data-f="testados" aria-pressed="true">testados</button>
+      <button type="button" class="chip" data-f="todos" aria-pressed="false">todos</button>
+      <button type="button" class="chip" data-f="pagou" aria-pressed="false">pagou</button>
+      <button type="button" class="chip" data-f="nao" aria-pressed="false">não pagou</button>
+      <button type="button" class="chip" data-f="pendente" aria-pressed="false">pendente</button>
+    </div>
+    <label class="sr-only" for="busca">Buscar app por nome</label>
+    <input class="busca" id="busca" type="search" placeholder="buscar app pelo nome" autocomplete="off">
+  </div>
+
+  <div class="ordenar">
+    <label class="sr-only" for="ordCampo">Ordenar por</label>
+    <select id="ordCampo">
+      <option value="">ordem original</option>
+      <option value="app">app</option>
+      <option value="horas">horas</option>
+      <option value="ganho">ganho</option>
+      <option value="rhora">R$/hora</option>
+      <option value="nota">nota</option>
+    </select>
+    <button type="button" id="ordDir" aria-label="Inverter a ordem">▲</button>
+  </div>
+
+  <p class="contagem" id="contagem" aria-live="polite"></p>
+
+  <div class="tabela-cartao cartao" style="padding:0;background:transparent;border:0">
+    <table class="tabela" id="tabela">
+      <caption class="sr-only">Apps testados pelo canal, com horas, ganho, R$/hora, saque mínimo, forma de pagamento, veredito e nota</caption>
+      <thead>
+        <tr>
+          <th scope="col" aria-sort="none"><button type="button" data-k="app">App<span class="seta" aria-hidden="true"></span></button></th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Teste</th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-k="horas">Horas<span class="seta" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-k="ganho">Ganho<span class="seta" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-k="rhora">R$/hora<span class="seta" aria-hidden="true"></span></button></th>
+          <th scope="col">Saque mín.</th>
+          <th scope="col">Pagamento</th>
+          <th scope="col">Veredito</th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-k="nota">Nota<span class="seta" aria-hidden="true"></span></button></th>
+        </tr>
+      </thead>
+      <tbody id="corpo"></tbody>
+    </table>
+    <p class="sem-resultado" id="semResultado" hidden></p>
+  </div>
+</section>
+
+<section aria-labelledby="h-rep">
+  <h2 id="h-rep">Reprovados</h2>
+  <p class="sub">apps que passaram pelo protocolo e não valem o tempo</p>
+  <div class="reprovados">
+    <ul id="listaRep"></ul>
+    <p class="regra">sem print de saque, não entra na planilha</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>Protocolo:</strong> 7 dias · cronômetro ligado · R$/hora como métrica.</p>
+  <p>Não é recomendação nem promessa de renda · experiência própria.</p>
+  <p id="rodapeData">atualizado em —</p>
+  <p class="assina">SACREL</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ========== DADOS ========== */
+const apps = [
+ {"app":"PiniOn","categoria":"pesquisa/tarefa","teste":"18–24/10/2026","horas":2.2,"ganho":0,"minimo_saque":"R$30","pagamento":"Pix","pagou":"não","veredito":"não vale","nota":1,"obs":"0 missões em 7 dias; saldo R$0,00"},
+ {"app":"OpinaTAP","categoria":"pesquisa","teste":"—","horas":0,"ganho":0,"minimo_saque":"R$15","pagamento":"Pix","pagou":"pendente","veredito":"pendente","nota":null,"obs":"nacional, Pix desde o início"},
+ {"app":"Attapoll","categoria":"pesquisa","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$3","pagamento":"PayPal","pagou":"pendente","veredito":"pendente","nota":null,"obs":"volume bom no BR, sem Pix"},
+ {"app":"Honeygain","categoria":"passivo","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$20","pagamento":"PayPal/crypto","pagou":"pendente","veredito":"pendente","nota":null,"obs":"renda passiva de banda, lento"},
+ {"app":"EarnApp","categoria":"passivo","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$5","pagamento":"—","pagou":"pendente","veredito":"pendente","nota":null,"obs":""},
+ {"app":"Freecash","categoria":"gpt","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$2","pagamento":"—","pagou":"pendente","veredito":"pendente","nota":null,"obs":""},
+ {"app":"Toloka","categoria":"microtarefa","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$2","pagamento":"—","pagou":"pendente","veredito":"pendente","nota":null,"obs":""},
+ {"app":"Swagbucks","categoria":"gpt","teste":"—","horas":0,"ganho":0,"minimo_saque":"US$3","pagamento":"—","pagou":"pendente","veredito":"pendente","nota":null,"obs":""}
+];
+
+// snapshots semanais do cofrinho — toda semana entra uma linha nova
+const cofrinho = [
+ {"semana":"2026-10-24","ganho_semana":0,"acumulado":0,"investido":0,"rendimento":0}
+];
+
+// null = usa a data do último snapshot do cofrinho; ou "AAAA-MM-DD" para forçar
+const ATUALIZADO_EM = null;
+
+/* ========== UTILITÁRIOS ========== */
+const NS = 'http://www.w3.org/2000/svg';
+const COR = {verde:'#2E7D5B', verm:'#C0453B', cinza:'#6B7770', ouro:'#D4AF37', grade:'#26352C'};
+const $ = id => document.getElementById(id);
+
+function svgEl(tag, attrs, txt){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (txt != null) e.textContent = txt;
+  return e;
+}
+function brl(v){
+  return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+function tick(v){ return Number.isInteger(v) ? 'R$ ' + v : brl(v); }
+function nice(m){
+  if (!(m > 0)) return 10;
+  const e = Math.pow(10, Math.floor(Math.log10(m)));
+  const f = m / e;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e;
+}
+function dataBR(iso){
+  const p = String(iso).split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : '—';
+}
+function diaMes(iso){
+  const p = String(iso).split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] : '—';
+}
+function mediana(a){
+  if (!a.length) return null;
+  const s = a.slice().sort((x, y) => x - y), m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+function norm(t){ return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+
+const testado = a => a.teste !== '—';
+const rhora = a => (a.horas > 0 ? a.ganho / a.horas : null);
+function corApp(a){
+  if (a.pagou === 'sim') return COR.verde;
+  if (a.veredito === 'não vale' || a.pagou === 'não') return COR.verm;
+  return COR.cinza;
+}
+function classeVeredito(v){
+  if (v === 'vale') return 'b-verde';
+  if (v === 'não vale') return 'b-verm';
+  return 'b-cinza';
+}
+// data final do teste ("18–24/10/2026" -> 24/10/2026) em dias UTC
+function fimTeste(a){
+  const m = /(\d{1,2})\/(\d{1,2})\/(\d{4})\s*$/.exec(a.teste || '');
+  return m ? Date.UTC(+m[3], +m[2] - 1, +m[1]) : null;
+}
+function isoUTC(iso){
+  const p = String(iso).split('-');
+  return Date.UTC(+p[0], +p[1] - 1, +p[2]);
+}
+function corSemana(s){
+  if (s.ganho_semana > 0) return COR.verde;
+  const fim = isoUTC(s.semana);
+  const doPeriodo = apps.filter(a => {
+    const f = fimTeste(a);
+    if (f == null) return false;
+    const d = (fim - f) / 864e5;
+    return d >= 0 && d <= 6;
+  });
+  if (doPeriodo.some(a => a.pagou === 'sim')) return COR.verde;
+  if (doPeriodo.some(a => a.veredito === 'não vale' || a.pagou === 'não')) return COR.verm;
+  return COR.cinza;
+}
+
+/* ========== CABEÇALHO E NÚMEROS ========== */
+const ultimo = cofrinho.length ? cofrinho[cofrinho.length - 1] : null;
+const dataAtual = ATUALIZADO_EM || (ultimo ? ultimo.semana : null);
+const txtAtual = 'atualizado em ' + (dataAtual ? dataBR(dataAtual) : '—');
+$('atualizado').textContent = txtAtual;
+$('rodapeData').textContent = txtAtual;
+
+(function numeros(){
+  const nTestados = apps.filter(testado).length;
+  const nPagaram = apps.filter(a => a.pagou === 'sim').length;
+  const nReprov = apps.filter(a => a.veredito === 'não vale').length;
+  const med = mediana(apps.filter(a => a.horas > 0).map(rhora));
+  const itens = [
+    {v: String(nTestados), l: 'apps testados', s: 'de ' + apps.length + ' na lista', c: ''},
+    {v: String(nPagaram), l: 'pagaram', s: 'com print de saque', c: 'c-verde'},
+    {v: String(nReprov), l: 'reprovaram', s: 'veredito "não vale"', c: 'c-verm'},
+    {v: med == null ? '—' : brl(med), l: 'R$/hora mediano', s: 'só apps com horas', c: 'c-ouro'}
+  ];
+  const ul = $('numeros');
+  itens.forEach(i => {
+    const li = document.createElement('li');
+    li.className = 'numero';
+    const st = document.createElement('strong'); st.textContent = i.v; if (i.c) st.className = i.c;
+    const sp = document.createElement('span'); sp.textContent = i.l;
+    const sm = document.createElement('small'); sm.textContent = i.s;
+    li.append(st, sp, sm);
+    ul.appendChild(li);
+  });
+})();
+
+/* ========== COFRINHO (número + variação) ========== */
+(function cofre(){
+  if (!ultimo){ $('cofreVar').textContent = '—'; return; }
+  $('cofreValor').textContent = brl(ultimo.acumulado);
+  const prev = cofrinho.length > 1 ? cofrinho[cofrinho.length - 2] : null;
+  const delta = prev ? ultimo.acumulado - prev.acumulado : ultimo.ganho_semana;
+  const el = $('cofreVar');
+  if (delta > 0){ el.textContent = '▲ ' + brl(delta) + ' na semana'; el.className = 'cofre-var c-verde'; }
+  else if (delta < 0){ el.textContent = '▼ ' + brl(-delta) + ' na semana'; el.className = 'cofre-var c-verm'; }
+  else { el.textContent = '— sem variação na semana'; el.className = 'cofre-var c-cinza'; }
+  $('cofreMeta').textContent = 'investido ' + brl(ultimo.investido) + ' · rendimento ' + brl(ultimo.rendimento);
+})();
+
+/* ========== GRÁFICOS ========== */
+function moldura(W, H, label){
+  const svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label, preserveAspectRatio: 'xMidYMid meet'});
+  svg.appendChild(svgEl('title', {}, label));
+  return svg;
+}
+function mostrarVazio(id, sim){ $(id).hidden = !sim; }
+
+// linha/área do acumulado por semana
+function graficoLinha(host, pontos){
+  const W = 360, H = 240, m = {t: 26, r: 20, b: 36, l: 56};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, n = pontos.length;
+  const max = Math.max.apply(null, pontos.map(p => p.v).concat([0]));
+  const vazio = max === 0;
+  const topo = vazio ? 50 : nice(max);
+  const label = 'Linha do valor acumulado por semana. ' +
+    (n ? pontos.map(p => p.rot + ': ' + brl(p.v)).join('; ') : 'Sem dados ainda.');
+  const svg = moldura(W, H, label);
+  const yv = v => m.t + ih - (v / topo) * ih;
+  const xi = i => n === 1 ? m.l + iw / 2 : m.l + (i * iw) / (n - 1);
+
+  [0, topo / 2, topo].forEach(t => {
+    const y = yv(t);
+    svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: y, y2: y, stroke: COR.grade, 'stroke-width': 1, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(svgEl('text', {x: m.l - 8, y: y + 4, 'text-anchor': 'end', 'class': 't-eixo'}, tick(t)));
+  });
+  svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: yv(0), y2: yv(0), stroke: COR.cinza, 'stroke-width': 2}));
+  svg.appendChild(svgEl('line', {x1: m.l, x2: m.l, y1: m.t, y2: yv(0), stroke: COR.cinza, 'stroke-width': 2}));
+
+  const passo = Math.ceil(n / 6);
+  pontos.forEach((p, i) => {
+    if (i % passo === 0 || i === n - 1)
+      svg.appendChild(svgEl('text', {x: xi(i), y: H - 12, 'text-anchor': 'middle', 'class': 't-eixo'}, p.rot));
+  });
+
+  if (vazio){
+    svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: yv(0), y2: yv(0), stroke: COR.ouro, 'stroke-width': 3, 'stroke-dasharray': '8 7'}));
+  } else if (n > 1){
+    const pts = pontos.map((p, i) => xi(i) + ',' + yv(p.v));
+    svg.appendChild(svgEl('polygon', {points: xi(0) + ',' + yv(0) + ' ' + pts.join(' ') + ' ' + xi(n - 1) + ',' + yv(0), fill: COR.ouro, 'fill-opacity': .14}));
+    svg.appendChild(svgEl('polyline', {points: pts.join(' '), fill: 'none', stroke: COR.ouro, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}));
+  }
+  pontos.forEach((p, i) => {
+    svg.appendChild(svgEl('circle', {cx: xi(i), cy: yv(p.v), r: 5, fill: COR.ouro, stroke: '#0E1512', 'stroke-width': 2}));
+  });
+  if (n){
+    const u = pontos[n - 1];
+    svg.appendChild(svgEl('text', {x: Math.min(xi(n - 1), W - m.r - 24), y: yv(u.v) - 12, 'text-anchor': 'middle', 'class': 't-valor'}, brl(u.v)));
+  }
+  host.replaceChildren(svg);
+  return vazio;
+}
+
+// barras horizontais: R$/hora por app
+function graficoBarrasH(host, itens){
+  const linha = 32, W = 360, m = {t: 10, r: 74, b: 34, l: 98};
+  const n = itens.length, iw = W - m.l - m.r, H = m.t + linha * n + m.b;
+  const vals = itens.filter(i => i.v != null).map(i => i.v);
+  const max = Math.max.apply(null, vals.concat([0]));
+  const vazio = max === 0;
+  const topo = vazio ? 10 : nice(max);
+  const label = 'Barras horizontais de R$ por hora, por app. ' +
+    itens.map(i => i.rot + ': ' + (i.v == null ? 'sem horas' : brl(i.v))).join('; ') + '.';
+  const svg = moldura(W, H, label);
+  const base = m.t + linha * n;
+
+  [0, topo / 2, topo].forEach(t => {
+    const x = m.l + (t / topo) * iw;
+    svg.appendChild(svgEl('line', {x1: x, x2: x, y1: m.t, y2: base, stroke: COR.grade, 'stroke-width': 1, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(svgEl('text', {x: x, y: base + 20, 'text-anchor': t === 0 ? 'start' : t === topo ? 'end' : 'middle', 'class': 't-eixo'}, tick(t)));
+  });
+  svg.appendChild(svgEl('line', {x1: m.l, x2: m.l, y1: m.t, y2: base, stroke: COR.cinza, 'stroke-width': 2}));
+  svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: base, y2: base, stroke: COR.cinza, 'stroke-width': 2}));
+
+  itens.forEach((it, i) => {
+    const cy = m.t + linha * i + linha / 2;
+    svg.appendChild(svgEl('text', {x: m.l - 8, y: cy + 4.5, 'text-anchor': 'end', 'class': 't-nome'}, it.rot));
+    if (it.v == null){
+      svg.appendChild(svgEl('text', {x: m.l + 8, y: cy + 4.5, 'class': 't-valor', style: 'fill:#A9B4AD'}, '—'));
+      return;
+    }
+    const w = Math.max((it.v / topo) * iw, 2);
+    svg.appendChild(svgEl('rect', {x: m.l, y: cy - 9, width: w, height: 18, fill: it.cor, rx: 2}));
+    svg.appendChild(svgEl('text', {x: m.l + w + 6, y: cy + 4.5, 'class': 't-valor'}, brl(it.v)));
+  });
+  if (vazio){
+    svg.appendChild(svgEl('line', {x1: m.l, x2: m.l, y1: m.t, y2: base, stroke: COR.ouro, 'stroke-width': 3, 'stroke-dasharray': '8 7'}));
+  }
+  host.replaceChildren(svg);
+  return vazio;
+}
+
+// barras verticais: ganho por semana
+function graficoBarrasV(host, itens){
+  const W = 360, H = 240, m = {t: 28, r: 16, b: 36, l: 56};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, n = itens.length;
+  const max = Math.max.apply(null, itens.map(i => i.v).concat([0]));
+  const vazio = max === 0;
+  const topo = vazio ? 50 : nice(max);
+  const label = 'Barras verticais do ganho por semana. ' +
+    (n ? itens.map(i => i.rot + ': ' + brl(i.v)).join('; ') : 'Sem dados ainda.');
+  const svg = moldura(W, H, label);
+  const yv = v => m.t + ih - (v / topo) * ih;
+
+  [0, topo / 2, topo].forEach(t => {
+    const y = yv(t);
+    svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: y, y2: y, stroke: COR.grade, 'stroke-width': 1, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(svgEl('text', {x: m.l - 8, y: y + 4, 'text-anchor': 'end', 'class': 't-eixo'}, tick(t)));
+  });
+  svg.appendChild(svgEl('line', {x1: m.l, x2: m.l, y1: m.t, y2: yv(0), stroke: COR.cinza, 'stroke-width': 2}));
+  svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: yv(0), y2: yv(0), stroke: COR.cinza, 'stroke-width': 2}));
+
+  const passo = Math.ceil(n / 6);
+  const faixa = n ? iw / n : iw, bw = Math.min(56, faixa * 0.6);
+  itens.forEach((it, i) => {
+    const cx = m.l + faixa * (i + 0.5);
+    const h = Math.max((it.v / topo) * ih, 2);
+    svg.appendChild(svgEl('rect', {x: cx - bw / 2, y: yv(0) - h, width: bw, height: h, fill: it.cor, rx: 2}));
+    svg.appendChild(svgEl('text', {x: cx, y: yv(0) - h - 7, 'text-anchor': 'middle', 'class': 't-valor'}, brl(it.v)));
+    if (i % passo === 0 || i === n - 1)
+      svg.appendChild(svgEl('text', {x: cx, y: H - 12, 'text-anchor': 'middle', 'class': 't-eixo'}, it.rot));
+  });
+  if (vazio){
+    svg.appendChild(svgEl('line', {x1: m.l, x2: W - m.r, y1: yv(0), y2: yv(0), stroke: COR.ouro, 'stroke-width': 3, 'stroke-dasharray': '8 7'}));
+  }
+  host.replaceChildren(svg);
+  return vazio;
+}
+
+(function desenhar(){
+  const totalCofre = cofrinho.reduce((s, x) => s + (x.acumulado || 0), 0);
+  if (totalCofre === 0){
+    const aviso = document.createElement('p');
+    aviso.className = 'vazio';
+    aviso.textContent = 'primeiro snapshot em ' + (ultimo ? dataBR(ultimo.semana) : '—') +
+      ' — o gráfico aparece quando o primeiro real entrar';
+    $('grafCofrinho').replaceChildren(aviso);
+    $('vazioCofrinho').hidden = true;
+  } else {
+    const vz1 = graficoLinha($('grafCofrinho'), cofrinho.map(s => ({rot: diaMes(s.semana), v: s.acumulado})));
+    mostrarVazio('vazioCofrinho', vz1);
+  }
+
+  const itens = apps.map(a => {
+    const r = rhora(a);
+    return {rot: a.app, v: r, cor: r == null ? COR.cinza : corApp(a)};
+  });
+  itens.sort((a, b) => (b.v == null ? -Infinity : b.v) - (a.v == null ? -Infinity : a.v));
+  const vz2 = graficoBarrasH($('grafApps'), itens);
+  mostrarVazio('vazioApps', vz2);
+
+  const vz3 = graficoBarrasV($('grafSemanas'), cofrinho.map(s => ({rot: diaMes(s.semana), v: s.ganho_semana, cor: corSemana(s)})));
+  mostrarVazio('vazioSemanas', vz3);
+})();
+
+/* ========== TABELA, FILTROS E ORDENAÇÃO ========== */
+const estado = {filtro: 'testados', busca: '', chave: '', dir: 1};
+const pegar = {
+  app: a => a.app.toLowerCase(),
+  horas: a => (a.horas > 0 ? a.horas : null),
+  ganho: a => (testado(a) ? a.ganho : null),
+  rhora: a => rhora(a),
+  nota: a => (a.nota == null ? null : a.nota)
+};
+const filtros = {
+  todos: () => true,
+  testados: a => testado(a),
+  pagou: a => a.pagou === 'sim',
+  nao: a => a.pagou === 'não',
+  pendente: a => a.pagou === 'pendente'
+};
+const avisoVazio = {
+  todos: 'nenhum app na lista.',
+  testados: 'nenhum app testado ainda — o primeiro resultado sai no sábado.',
+  pagou: 'nenhum app pagou ainda.',
+  nao: 'nenhum app reprovado por falta de pagamento ainda.',
+  pendente: 'nenhum app pendente.'
+};
+
+function celula(rotulo, conteudo, classe){
+  const td = document.createElement('td');
+  td.setAttribute('data-label', rotulo);
+  if (classe) td.className = classe;
+  if (conteudo instanceof Node) td.appendChild(conteudo); else td.textContent = conteudo;
+  return td;
+}
+function montarLinha(a){
+  const tr = document.createElement('tr');
+  const th = document.createElement('th');
+  th.scope = 'row';
+  th.appendChild(document.createTextNode(a.app));
+  if (a.obs){ const sm = document.createElement('small'); sm.textContent = a.obs; th.appendChild(sm); }
+  tr.appendChild(th);
+
+  const t = testado(a), r = rhora(a);
+  const badge = document.createElement('span');
+  badge.className = 'badge ' + classeVeredito(a.veredito);
+  badge.textContent = a.veredito || '—';
+
+  tr.appendChild(celula('Categoria', a.categoria || '—'));
+  tr.appendChild(celula('Teste', a.teste || '—'));
+  tr.appendChild(celula('Horas', a.horas > 0 ? String(a.horas).replace('.', ',') + ' h' : '—', 'num'));
+  tr.appendChild(celula('Ganho', t ? brl(a.ganho) : '—', 'num'));
+  tr.appendChild(celula('R$/hora', r == null ? '—' : brl(r), 'num'));
+  tr.appendChild(celula('Saque mín.', a.minimo_saque || '—'));
+  tr.appendChild(celula('Pagamento', a.pagamento || '—'));
+  tr.appendChild(celula('Veredito', badge));
+  tr.appendChild(celula('Nota', a.nota == null ? '—' : String(a.nota), 'num'));
+  return tr;
+}
+function comparar(a, b){
+  const va = pegar[estado.chave](a), vb = pegar[estado.chave](b);
+  if (va == null && vb == null) return 0;
+  if (va == null) return 1;           // "—" sempre no fim
+  if (vb == null) return -1;
+  if (typeof va === 'string') return va.localeCompare(vb, 'pt-BR') * estado.dir;
+  return (va - vb) * estado.dir;
+}
+function renderTabela(){
+  let lista = apps.filter(filtros[estado.filtro]);
+  const q = norm(estado.busca.trim());
+  if (q) lista = lista.filter(a => norm(a.app).indexOf(q) !== -1);
+  if (estado.chave) lista = lista.slice().sort(comparar);
+
+  const corpo = $('corpo');
+  corpo.replaceChildren.apply(corpo, lista.map(montarLinha));
+  $('contagem').textContent = lista.length + ' de ' + apps.length + ' apps · ' +
+    apps.filter(a => !testado(a)).length + ' na fila';
+  const sem = $('semResultado');
+  if (!lista.length){
+    sem.hidden = false;
+    sem.textContent = q ? 'nenhum app com esse nome nesse filtro.' : avisoVazio[estado.filtro];
+  } else sem.hidden = true;
+
+  document.querySelectorAll('#tabela thead th[aria-sort]').forEach(th => {
+    const k = th.querySelector('button').getAttribute('data-k');
+    const seta = th.querySelector('.seta');
+    if (k === estado.chave){
+      th.setAttribute('aria-sort', estado.dir === 1 ? 'ascending' : 'descending');
+      seta.textContent = estado.dir === 1 ? '▲' : '▼';
+    } else {
+      th.setAttribute('aria-sort', 'none');
+      seta.textContent = '';
+    }
+  });
+  $('ordCampo').value = estado.chave;
+  $('ordDir').textContent = estado.dir === 1 ? '▲' : '▼';
+}
+
+$('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip');
+  if (!b) return;
+  estado.filtro = b.getAttribute('data-f');
+  document.querySelectorAll('#chips .chip').forEach(c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
+  renderTabela();
+});
+$('busca').addEventListener('input', e => { estado.busca = e.target.value; renderTabela(); });
+document.querySelector('#tabela thead').addEventListener('click', e => {
+  const b = e.target.closest('button[data-k]');
+  if (!b) return;
+  const k = b.getAttribute('data-k');
+  if (estado.chave === k) estado.dir = -estado.dir; else { estado.chave = k; estado.dir = 1; }
+  renderTabela();
+});
+$('ordCampo').addEventListener('change', e => { estado.chave = e.target.value; estado.dir = 1; renderTabela(); });
+$('ordDir').addEventListener('click', () => { estado.dir = -estado.dir; renderTabela(); });
+renderTabela();
+
+/* ========== REPROVADOS ========== */
+(function reprovados(){
+  const ul = $('listaRep');
+  const lista = apps.filter(a => a.veredito === 'não vale');
+  if (!lista.length){
+    const li = document.createElement('li');
+    li.textContent = 'nenhum reprovado ainda.';
+    li.style.color = '#A9B4AD';
+    ul.appendChild(li);
+    return;
+  }
+  lista.forEach(a => {
+    const li = document.createElement('li');
+    const nome = document.createElement('span'); nome.className = 'rep-nome'; nome.textContent = a.app;
+    const car = document.createElement('span'); car.className = 'carimbo'; car.textContent = 'não vale';
+    li.append(nome, car);
+    if (a.obs){ const p = document.createElement('p'); p.className = 'rep-obs'; p.textContent = a.obs; li.appendChild(p); }
+    ul.appendChild(li);
+  });
+})();
+
+/* ========== COMO ATUALIZAR ==========
+// 1) Novo snapshot: adicione uma linha ao final de `cofrinho` (semana em AAAA-MM-DD, ganho_semana, acumulado, investido, rendimento).
+// 2) Mudar veredito: no objeto do app em `apps`, edite "veredito", "pagou", "teste", "horas", "ganho" e "nota".
+// 3) Trocar a data de atualização: ela vem do último snapshot; para forçar outra, preencha ATUALIZADO_EM = "AAAA-MM-DD".
+*/
+})();
+</script>
+</body>
+</html>
